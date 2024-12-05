@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from models import User
 
-# Blueprintの作成test
+# Blueprintの作成testあああ
 user_bp = Blueprint('user', __name__, url_prefix='/users')
 
 
