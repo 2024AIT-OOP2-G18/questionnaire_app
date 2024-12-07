@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>データ一覧</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('student_info.list') }}">学生一覧</a></li>
+    </ul>
+
+    <a href="{{ url_for('student_info.add') }}">新規学生追加</a>
+    <table>
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>学籍番号</th>
+                <th>名前</th>
+                <th>性別</th>
+                <th>年齢</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student_info in items %}
+            <tr>
+                <td><a href="{{ url_for('student_info.edit', student_id=student_info.id) }}">編集</a></td>
+                <td>{{ student_info.id }}</td>
+                <td>{{ student_info.name }}</td>
+                <td>{{ student_info.sex }}</td>
+                <td>{{ student_info.age }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

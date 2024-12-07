@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>学籍情報編集</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>学籍情報を編集</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('student_info.list') }}">学籍情報一覧</a></li>
+        <li>学籍情報編集</li>
+    </ul>
+
+    <form action="{{ url_for('student_info.edit', student_id=student_info.id) }}" method="post">
+        <label>学籍番号: <input type="text" name="id" value="{{ student_info.id }}" required></label><br>
+        <label>名前: <input type="text" name="name" value="{{ student_info.name }}" required></label><br>
+        <label>性別: <input type="text" name="sex" value="{{ student_info.sex }}" required></label><br>
+        <label>年齢: <input type="number" name="age" value="{{ student_info.age }}" required></label><br>
+        <button type="submit">保存</button>
+    </form>
+</body>
+</html>
