@@ -11,7 +11,7 @@ blueprints = [
   user_bp,
   product_bp,
   order_bp,
-  commute_bp
+  commute_bp,
   lunch_bp,
   parttimer_bp,
   student_info_bp,
