@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>データ一覧</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('parttimer.list') }}">アルバイトに関するアンケート</a></li>
+
+    </ul>
+    <a href="{{ url_for('parttimer.add') }}">アンケートを記入</a>
+    <table>
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>アルバイトのカテゴリー</th>
+                <th>時給</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parttimer in items %}
+            <tr>
+                <td><a href="{{ url_for('parttimer.edit', parttimer_id=parttimer.id) }}">編集</a></td>
+                <td>{{ parttimer.name }}</td>
+                <td>{{ parttimer.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

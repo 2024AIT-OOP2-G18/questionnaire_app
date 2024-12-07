@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アルバイトに関するアンケート</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>アンケートを記入</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('parttimer.list') }}">アルバイトに関するアンケート</a></li>
+        <li>アンケートを記入</li>
+    </ul>
+
+    <form action="{{ url_for('product.add') }}" method="post">
+        <label>学籍番号: <input type="text" name="name" required></label><br>
+        <label>アルバイトのカテゴリー: <input type="text" name="category" required></label><br>
+        <label>時給: <input type="number" step="1" name="hourlypay" required></label><br>
+        <button type="submit">追加</button>
+    </form>
+</body>
+</html>
