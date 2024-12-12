@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>データ一覧</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <head>
+        <meta charset="UTF-8">
+        <title>データ一覧</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.jsの追加 -->
+    </head>
 </head>
 <body>
     <h1>{{ title }}</h1>
@@ -31,5 +33,69 @@
             {% endfor %}
         </tbody>
     </table>
+    <h2>昼食の集計</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>昼食</th>
+                <th>選択数</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in lunch_counts %}
+            <tr>
+                <td>{{ row.lunch_place }}</td>
+                <td>{{ row.count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>昼食の比率</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>昼食</th>
+                <th>比率(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in lunch_ratios %}
+            <tr>
+                <td>{{ row.lunch_place }}</td>
+                <td>{{ "%.1f" | format(row.ratio) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- グラフ描画用キャンバス -->
+    <canvas id="ratio_Chart" width="400" height="200"></canvas> 
+    <script>
+        //Flaskから渡されたデータをJSON化
+        const labels = JSON.parse('{{ labels|tojson }}');
+        const ratios = JSON.parse('{{ lunch_ratios|tojson }}').map(row => row.ratio); //棒グラフ
+        const ctx = document.getElementById('ratio_Chart').getContext('2d');
+        //作成
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                //data
+                datasets: [{
+                    label: '昼食の比率(%)',
+                    data: ratios,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
