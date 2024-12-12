@@ -16,11 +16,7 @@
     <form action="{{ url_for('student_info.add') }}" method="post">
         <label>学籍番号: <input type="text" name="id" required></label><br>
         <label>名前: <input type="text" name="name" required></label><br>
-        <label>性別:</label><select name="sex" required>
-            <option value="男">男</option>
-            <option value="女">女</option>
-            <option value="その他">その他</option>
-            </select><br>
+        <label>性別: <input type="text" name="sex" required></label><br>
         <label>年齢: <input type="number" name="age" required></label><br>
         <button type="submit">追加</button>
     </form>
