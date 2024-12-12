@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from models import PartTimer
+from peewee import fn
 
 # Blueprintの作成
 parttimer_bp = Blueprint('parttimer', __name__, url_prefix='/parttimers')
@@ -39,3 +40,31 @@ def edit(parttimer_id):
         return redirect(url_for('parttimer.list'))
 
     return render_template('parttimer_edit.html', parttimer=parttimer)
+
+
+@parttimer_bp.route('/stats')
+def stats():
+    # カテゴリー別人数の集計
+    category_data = (
+        PartTimer
+        .select(PartTimer.category, fn.COUNT(PartTimer.id).alias('count'))
+        .group_by(PartTimer.category)
+    )
+    category_labels = [row.category for row in category_data]
+    category_values = [row.count for row in category_data]
+
+    # 時給の統計値計算
+    hourlypay_stats = PartTimer.select(
+        fn.MIN(PartTimer.hourlypay).alias('min'),
+        fn.MAX(PartTimer.hourlypay).alias('max'),
+        fn.AVG(PartTimer.hourlypay).alias('avg')
+    ).dicts().get()
+
+     # 平均時給のフォーマット
+    hourlypay_stats['avg'] = round(hourlypay_stats['avg'], 2) if hourlypay_stats['avg'] is not None else None
+
+    return render_template(
+        'parttimer_stats.html',
+        category_data={"labels": category_labels, "values": category_values},
+        hourlypay_stats=hourlypay_stats
+    )

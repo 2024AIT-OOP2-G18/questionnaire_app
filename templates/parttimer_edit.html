@@ -15,7 +15,15 @@
 
     <form action="{{ url_for('parttimer.edit', parttimer_id=parttimer.id) }}" method="post">
         <label>名前: <input type="text" name="name" value="{{ parttimer.name }}" required></label><br>
-        <label>カテゴリー: <input type="text" name="category" value="{{ parttimer.category }}" required></label><br>
+        <label>カテゴリー:
+            <select name="category">
+                <option value="教育（塾講師・家庭教師等）" {% if parttimer.category == "教育（塾講師・家庭教師等）" %}selected{% endif %}>教育（塾講師・家庭教師等）</option>
+                <option value="飲食・フード（接客・調理）" {% if parttimer.category == "飲食・フード（接客・調理）" %}selected{% endif %}>飲食・フード（接客・調理）</option>
+                <option value="販売（コンビニエンスストア・スーパーマーケット）" {% if parttimer.category == "販売（コンビニエンスストア・スーパーマーケット）" %}selected{% endif %}>販売（コンビニエンスストア・スーパーマーケット）</option>
+                <option value="サービス業" {% if parttimer.category == "サービス業" %}selected{% endif %}>サービス業</option>
+                <option value="その他" {% if parttimer.category == "その他" %}selected{% endif %}>その他</option>
+            </select>
+        </label><br>
         <label>時給: <input type="number" name="hourlypay" value="{{ parttimer.hourlypay }}" required></label><br>
         <button type="submit">保存</button>
     </form>
