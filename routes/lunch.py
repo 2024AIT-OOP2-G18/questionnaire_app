@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from models import Lunch
+from peewee import fn
 
 # Blueprintの作成
 lunch_bp = Blueprint('lunch', __name__, url_prefix='/lunches')
@@ -8,7 +9,27 @@ lunch_bp = Blueprint('lunch', __name__, url_prefix='/lunches')
 @lunch_bp.route('/')
 def list():
     lunches = Lunch.select()
-    return render_template('lunch_list.html', title='昼食アンケート', items=lunches)
+    #集計
+    lunch_counts = (
+        Lunch.select(Lunch.lunch_place, fn.COUNT(Lunch.lunch_place).alias('count'))
+        .group_by(Lunch.lunch_place)
+        .order_by(-fn.COUNT(Lunch.lunch_place))
+    )
+    #合計
+    total_count = sum(row.count for row in lunch_counts)
+    #比率
+    lunch_ratios = [
+        {
+            "lunch_place": row.lunch_place,
+            "count": row.count,
+            "ratio": (row.count / total_count * 100) if total_count > 0 else 0
+        }
+        for row in lunch_counts
+    ]
+    #グラフの要素
+    labels = [row.lunch_place for row in lunch_counts]
+    return render_template('lunch_list.html', title='昼食アンケート', items=lunches, lunch_counts=lunch_counts, labels=labels, lunch_ratios=lunch_ratios)
+
 
 
 @lunch_bp.route('/add', methods=['GET', 'POST'])
