@@ -43,17 +43,17 @@ def add():
     return render_template('programing_add.html')
 
 
-#@programing_bp.route('/edit/<int:progrmaing_id>', methods=['GET', 'POST'])
-#def edit(programing_id):
-#    programing = Programing.get_or_none(Programing.id == programing_id)
-#    if not programing:
-#        return redirect(url_for('programing.list'))
-#
-#    if request.method == 'POST':
-#        programing.name = request.form['name']
-#        programing.like = request.form['like']
-#        programing.language = request.form['language']
-#        programing.save()
-#        return redirect(url_for('programing.list'))
-#
-#    return render_template('programing_edit.html', programing=programing)
+@programing_bp.route('/edit/<int:programing_id>', methods=['GET', 'POST'])
+def edit(programing_id):
+   programing = Programing.get_or_none(Programing.id == programing_id)
+   if not programing:
+       return redirect(url_for('programing.list'))
+
+   if request.method == 'POST':
+       programing.user_id = request.form['user_id']
+       programing.like = request.form['like']
+       programing.language = request.form['language']
+       programing.save()
+       return redirect(url_for('programing.list'))
+
+   return render_template('programing_edit.html', programing=programing)
