@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>回答者一覧</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('programing.add') }}">アンケートに答える</a>
+    <table>
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>学籍番号</th>
+                <th>プログラミング好き？</th>
+                <th>好きな言語</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for programing in items %}
+            <tr>
+                <td><a href="{{ url_for('programing.edit' , programing_id=programing.id ) }}">編集</a></td>
+                <td>{{ programing.user_id }}</td>
+                <td>{{ programing.like }}</td>
+                <td>{{ programing.language }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

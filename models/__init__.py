@@ -7,6 +7,7 @@ from .commute import Commute
 from .lunch import Lunch
 from .parttimer import PartTimer
 from .student_info import Student_info
+from .programing import Programing
 
 # モデルのリストを定義しておくと、後でまとめて登録しやすくなります
 MODELS = [
@@ -17,6 +18,7 @@ MODELS = [
     Lunch,
     PartTimer,
     Student_info,
+    Programing
 ]
 
 # データベースの初期化関数

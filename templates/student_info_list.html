@@ -9,7 +9,7 @@
     <h1>{{ title }}</h1>
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
-        <li><a href="{{ url_for('student_info.list') }}">学生一覧</a></li>
+        <li><a href="{{ url_for('student_info.list') }}">学籍情報一覧</a></li>
     </ul>
 
     <a href="{{ url_for('student_info.add') }}">新規学生追加</a>
@@ -35,5 +35,34 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <h2>性別比率</h2>
+    <canvas id="sex_proportion" width="40" height="40"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0 "></script>
+    <script>
+      var male_count = JSON.parse('{{ m_sum|tojson }}');
+      var female_count = JSON.parse('{{ f_sum|tojson }}');
+      var other_count = JSON.parse('{{ o_sum|tojson }}');
+
+      const ctx = document.getElementById("sex_proportion");
+      const myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ["男", "女", "その他"],
+          datasets: [{
+            backgroundColor: [
+              "#36a2eb",
+              "#ff6484",
+              "#4bc0c0"
+            ],
+            data: [male_count, female_count, other_count]
+          }]
+        },
+       plugins: [ChartDataLabels], // pluginとしてchartdatalabelsを追加
+        options: {
+          }
+      });
+    </script>
 </body>
 </html>

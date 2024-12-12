@@ -5,6 +5,7 @@ from .commute import commute_bp
 from.lunch import lunch_bp
 from .parttimer import parttimer_bp
 from .student_info import student_info_bp
+from .programing import programing_bp
 
 # Blueprintをリストとしてまとめる
 blueprints = [
@@ -15,4 +16,5 @@ blueprints = [
   lunch_bp,
   parttimer_bp,
   student_info_bp,
+  programing_bp,
 ]

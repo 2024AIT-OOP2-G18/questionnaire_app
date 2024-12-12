@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>プログラミングアンケート</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>プログラミングアンケートの編集</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('programing.list') }}">プログラミングアンケート</a></li>
+        <li>プログラミングアンケートの編集</li>
+    </ul>
+
+    <form action="{{ url_for('programing.edit', programing_id=programing.id) }}" method="post">
+        <form action="{{ url_for('programing.add') }}" method="post">
+            <label>学籍番号: 
+                <input type="text" name="user_id" required value={{programing.user_id}}>
+            </label><br>
+            <label>プログラミング好き？（1 : 嫌い, 5 : 好き）: 
+                <select name="like">
+                    <option value="1" {% if programing.like == 1 %}selected{% endif %}>1</option>
+                    <option value="2" {% if programing.like == 2 %}selected{% endif %}>2</option>
+                    <option value="3" {% if programing.like == 3 %}selected{% endif %}>3</option>
+                    <option value="4" {% if programing.like == 4 %}selected{% endif %}>4</option>
+                    <option value="5" {% if programing.like == 5 %}selected{% endif %}>5</option>
+                </select>
+            </label><br>
+            <label>好きな言語: 
+                <select name="language">
+                    <option value="c" {% if programing.language == 'c' %}selected{% endif %}>C言語</option>
+                    <option value="py" {% if programing.language == 'py' %}selected{% endif %}>Python</option>
+                    <option value="java" {% if programing.language == 'java' %}selected{% endif %}>Java</option>
+                    <option value="js" {% if programing.language == 'js' %}selected{% endif %}>JavaScript</option>
+                </select>
+            </label><br>
+            <button type="submit">編集を保存する</button>
+        </form>
+    </form>
+</body>
+</html>

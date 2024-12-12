@@ -7,19 +7,9 @@
 </head>
 <body>
     <h1>アンケート回答</h1>
-    <ul class="breadcrumb">
-        <li><a href="{{ url_for('index') }}">HOME</a></li>
-        <li><a href="{{ url_for('order.list') }}">プログラミング</a></li>
-        <li>登録</li>
-    </ul>
-    
-    <form action="{{ url_for('order.add') }}" method="post">
+    <form action="{{ url_for('programing.add') }}" method="post">
         <label>学籍番号: 
-            <select name="user_id" required>
-                {% for user in users %}
-                    <option value="{{ user.id }}">{{ user.name }}</option>
-                {% endfor %}
-            </select>
+            <input type="text" name="user_id" required>
         </label><br>
         <label>プログラミング好き？（1 : 嫌い, 5 : 好き）: 
             <select name="like">
