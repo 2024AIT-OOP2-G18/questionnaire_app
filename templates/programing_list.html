@@ -19,7 +19,7 @@
         <tbody>
             {% for programing in items %}
             <tr>
-                <td><a href="#">編集</a></td>
+                <td><a href="{{ url_for('programing.edit' , programing_id=programing.id ) }}">編集</a></td>
                 <td>{{ programing.user_id }}</td>
                 <td>{{ programing.like }}</td>
                 <td>{{ programing.language }}</td>
@@ -27,5 +27,26 @@
             {% endfor %}
         </tbody>
     </table>
+    <h2>統計</h2>
+    <h3>Like の割合</h3>
+    <ul>
+        {% for key, value in like_stats.items() %}
+            <li>{{ key }}: {{ value|round(2) }}%</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Language の割合</h3>
+    <ul>
+        {% for key, value in language_stats.items() %}
+            <li>{{ key }}: {{ value|round(2) }}%</li>
+        {% endfor %}
+    </ul>
+
+    <h2>プログラミング一覧</h2>
+    <ul>
+        {% for item in items %}
+            <li>{{ item.user_id }}: {{ item.like }} - {{ item.language }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
