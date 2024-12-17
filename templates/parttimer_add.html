@@ -15,7 +15,15 @@
 
     <form action="{{ url_for('parttimer.add') }}" method="post">
         <label>名前: <input type="text" name="name" required></label><br>
-        <label>カテゴリー: <input type="text" name="category" required></label><br>
+        <label>カテゴリー:
+            <select name="category">
+                <option value="教育（塾講師・家庭教師等）">教育（塾講師・家庭教師等）</option>
+                <option value="飲食・フード（接客・調理）">飲食・フード（接客・調理）</option>
+                <option value="販売（コンビニエンスストア・スーパーマーケット）">販売（コンビニエンスストア・スーパーマーケット）</option>
+                <option value="サービス業">サービス業</option>
+                <option value="その他">その他</option>
+            </select>
+        </label><br>
         <label>時給: <input type="number" name="hourlypay" required></label><br>
         <button type="submit">追加</button>
     </form>

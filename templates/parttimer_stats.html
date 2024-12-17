@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アルバイト統計情報</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>アルバイト統計情報</h1>
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li><a href="{{ url_for('parttimer.list') }}">アルバイトに関するアンケート</a></li>
+        <li>統計情報</li>
+    </ul>
+
+    <h2>カテゴリー別分布</h2>
+    <canvas id="categoryChart" width="400" height="200"></canvas>
+    <script>
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+        const categoryData = {{ category_data|tojson }};
+        const categoryChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: categoryData.labels,
+                datasets: [{
+                    label: 'カテゴリー別人数',
+                    data: categoryData.values,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <h2>時給の統計</h2>
+    <p>最低時給: {{ hourlypay_stats.min }}</p>
+    <p>最高時給: {{ hourlypay_stats.max }}</p>
+    <p>平均時給: {{ hourlypay_stats.avg }}</p>
+
+</body>
+</html>

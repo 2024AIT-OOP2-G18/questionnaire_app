@@ -3,7 +3,7 @@ from .db import db
 
 class PartTimer(Model):
     name = CharField()
-    category = CharField()
+    category = IntegerField()
     hourlypay = IntegerField()
 
     class Meta:
