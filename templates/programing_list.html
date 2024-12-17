@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>回答者一覧</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <!-- Chart.js を読み込み -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <a href="{{ url_for('programing.add') }}">アンケートに答える</a>
@@ -27,5 +29,63 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <h2>統計</h2>
+
+    <h3>プログラミングは好きですか？ の割合</h3>
+    <!-- Like の円グラフ用キャンバス -->
+    <canvas id="likeChart" width="400" height="400"></canvas>
+
+    <h3>好きな言語 の割合</h3>
+    <!-- Language の円グラフ用キャンバス -->
+    <canvas id="languageChart" width="400" height="400"></canvas>
+
+    <script>
+        // Flask から渡されたデータを JavaScript で扱えるようにする
+        const likeStats = {{ like_stats|tojson }};
+        const languageStats = {{ language_stats|tojson }};
+
+        // Like の割合を円グラフで描画
+        const likeChartCtx = document.getElementById('likeChart').getContext('2d');
+        new Chart(likeChartCtx, {
+            type: 'pie', // 円グラフ
+            data: {
+                labels: Object.keys(likeStats), // データのラベル
+                datasets: [{
+                    data: Object.values(likeStats), // データの値
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'], // 色の設定
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+
+        // Language の割合を円グラフで描画
+        const languageChartCtx = document.getElementById('languageChart').getContext('2d');
+        new Chart(languageChartCtx, {
+            type: 'pie', // 円グラフ
+            data: {
+                labels: Object.keys(languageStats), // データのラベル
+                datasets: [{
+                    data: Object.values(languageStats), // データの値
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'], // 色の設定
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
