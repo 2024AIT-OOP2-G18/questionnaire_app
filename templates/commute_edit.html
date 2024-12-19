@@ -14,8 +14,12 @@
     </ul>
 
     <form action="{{ url_for('commute.edit', commute_id=commute.id) }}" method="post">
-        <label>通学方法: <input type="text" name="way" required></label><br>
-        <label>通学時間: <input type="number" name="time" required></label><br>
+        <label>通学方法:
+            <input type="radio" name="way" value="徒歩"> 徒歩　
+            <input type="radio" name="way" value="車"> 車　
+            <input type="radio" name="way" value="公共交通機関"> 公共交通機関
+        </label><br>
+        <label>通学時間(分): <input type="number" name="time" required></label><br>
         <button type="submit">保存</button>
     </form>
 </body>
