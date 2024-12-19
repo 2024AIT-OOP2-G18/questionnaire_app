@@ -34,9 +34,10 @@ def list():
         average[2] = data[2][1] / data[2][0]    #公共交通機関の平均時間
 
     rate = [0, 0, 0]
-    rate[0] = data[0][0] / count * 100
-    rate[1] = data[1][0] / count * 100
-    rate[2] = data[2][0] / count * 100
+    if(count != 0):
+        rate[0] = data[0][0] / count * 100
+        rate[1] = data[1][0] / count * 100
+        rate[2] = data[2][0] / count * 100
 
     return render_template('commute_list.html', title='通学情報一覧', items=commutes, data = data, average = average,rate = rate)
 
